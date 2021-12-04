@@ -1,0 +1,25 @@
+Nha cung cap
+lap phieu giao
+
+Khach hang
+dk
+dang nhap
+xem full san pham
+xem chi tiet san pham
+bỏ sp vào giỏ
+xem tổng quan hóa đơn
+xem hoa don (có các sản phẩm)
+đặt hàng - thanh toán
+
+Nhân viên quản trị
+them ,xoa, sua thong tin san pham
+dat hang - ghi phieu dat hang
+
+Quản lý
+Sủa tình trạng đơn hàng
+Thống kê doanh thu
+thiet kap gia giam
+
+Tài xế
+chọn đơn hàng
+cập nhật tình trạng
