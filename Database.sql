@@ -16,7 +16,7 @@ GO
 use QLCuaHang
 go
 
-CREATE TABLE [khacHang] (
+CREATE TABLE [KhacHang] (
   [MaKH] int identity(1, 1),
   [TenKH] nvarchar(50),
   [DiaChi] nvarchar(100),
@@ -62,7 +62,7 @@ CREATE TABLE [DonHang] (
   [MaNV] varchar(8),
   TongTien numeric(8, 2),
   SoTienGiam numeric(8, 2),
-  GiaCuoiCung numeric(8, 2),
+  GiaCuoiCung AS TongTien - SoTienGiam,
   PRIMARY KEY ([MaDH]),
   CONSTRAINT [FK_DonHang.MaKH]
     FOREIGN KEY ([MaKH])
