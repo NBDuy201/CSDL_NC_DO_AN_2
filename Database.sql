@@ -58,10 +58,10 @@ CREATE TABLE [DonHang] (
   [NgayLapDon] date,
   [MaKH] int,
   [TinhTrang] nvarchar(50),
-  [MaKM] int,
+  [MaKM] int default NULL,
   [MaNV] varchar(8),
-  TongTien numeric(8, 2),
-  SoTienGiam numeric(8, 2),
+  TongTien numeric(8, 2) default 0,
+  SoTienGiam numeric(8, 2) default 0,
   GiaCuoiCung AS TongTien - SoTienGiam,
   PRIMARY KEY ([MaDH]),
   CONSTRAINT [FK_DonHang.MaKH]
@@ -172,9 +172,9 @@ go
 CREATE TABLE [CT_DonHang] (
   [MaSP] varchar(8),
   [MaDH] int,
-  [SoLuong] int,
-  [DonGia] numeric(8, 2),
-  [ThanhTien] numeric(8, 2),
+  [SoLuong] int default 1,
+  [DonGia] numeric(8, 2) default 0,
+  [ThanhTien] as [SoLuong] * [DonGia],
   PRIMARY KEY ([MaSP], [MaDH]),
   CONSTRAINT [FK_CT_DonHang.MaDH]
     FOREIGN KEY ([MaDH])
@@ -185,6 +185,100 @@ CREATE TABLE [CT_DonHang] (
     FOREIGN KEY ([MaSP])
       REFERENCES [SanPham]([MaSP])
 	  on update CASCADE
-	  ON DELETE CASCADE
 );
 go
+
+-- =============
+-- Trigger
+-- =============
+-- Tổng tiền
+CREATE OR ALTER trigger trg_TongTien_CT_HD On CT_DonHang
+AFTER INSERT, DELETE, UPDATE
+AS
+BEGIN
+	DECLARE @maDHang int
+
+	-- Insert
+	IF EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM DELETED)
+	BEGIN
+		SET @maDHang = (SELECT MaDH FROM INSERTED)
+
+		UPDATE DonHang
+		SET TongTien = 
+		(
+			SELECT SUM(ThanhTien)
+			FROM CT_DonHang
+			WHERE MaDH = @maDHang
+		)
+		WHERE DonHang.MaDH = @maDHang
+	END
+
+	-- Delete
+	IF EXISTS(SELECT * FROM DELETED) AND NOT EXISTS(SELECT * FROM INSERTED)
+	BEGIN
+		SET @maDHang = (SELECT MaDH FROM DELETED)
+
+		UPDATE DonHang
+		SET TongTien = 
+		(
+			SELECT SUM(ThanhTien)
+			FROM CT_DonHang
+			WHERE MaDH = @maDHang
+		)
+		WHERE DonHang.MaDH = @maDHang
+	END
+
+	-- Update
+	IF UPDATE(SoLuong) OR UPDATE(DonGia)
+	BEGIN
+		SET @maDHang = (SELECT MaDH FROM INSERTED)
+
+		UPDATE DonHang
+		SET TongTien = 
+		(
+			SELECT SUM(ThanhTien)
+			FROM CT_DonHang
+			WHERE MaDH = @maDHang
+		)
+		WHERE DonHang.MaDH = @maDHang
+	END
+END
+GO
+
+-- Giá giảm
+CREATE OR ALTER trigger trg_GiaGiam_DonHang On DonHang
+AFTER INSERT, UPDATE
+AS
+BEGIN
+	DECLARE 
+		@maDHang int,
+		@maKMai int
+	
+	-- Insert dòng mới hoặc update trên TongTien
+	IF (EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM DELETED)) OR Update(TongTien) OR Update(MaKM)
+	Begin
+		-- Lấy thông tin
+		SELECT @maDHang = MaDH, @maKMai = MaKM
+		FROM INSERTED
+
+		-- Lấy phần trăm tiền giảm
+		DECLARE @mucKM float = (SELECT MucKM 
+								FROM KhuyenMai
+								where MaKM = @maKMai)
+		
+		-- Cập nhật tiền giảm
+		if(@mucKM is NULL)
+		Begin
+			UPDATE DonHang
+			SET SoTienGiam = 0
+			WHERE DonHang.MaDH = @maDHang
+		End
+		Else
+		Begin
+			UPDATE DonHang
+			SET SoTienGiam = TongTien * @mucKM
+			WHERE DonHang.MaDH = @maDHang
+		End
+	End
+END
+GO
