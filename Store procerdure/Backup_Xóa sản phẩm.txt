@@ -1,0 +1,53 @@
+-- Hàm bổ trợ
+CREATE OR alter FUNCTION DonHangChuaThanhToan (@MaSP INT)
+RETURNS TABLE
+AS
+RETURN
+	SELECT dh.MaDH
+	FROM CT_DonHang ct JOIN DonHang dh
+	ON ct.MaDH = dh.MaDH
+	WHERE 
+		ct.MaSP = @MaSP AND
+		(dh.TinhTrang = N'Chưa đồng ý' OR
+		dh.TinhTrang = N'Đồng ý')
+GO
+
+-- =============================================
+--- Xóa sản phẩm
+--- Input: Mã sản phẩm, Mã nhân viên
+--- Output: Sản phẩm được xóa
+-- =============================================
+CREATE OR ALTER PROC NhanVienQuanTri_XoaSanPham
+	@MaNV INT,
+	@MaSP INT
+AS
+BEGIN
+	BEGIN TRAN
+		-- Mã nhân viên để trống hoặc không tồn tại
+		IF (@MaNV IS NULL OR NOT EXISTS (SELECT* FROM NhanVien WHERE MaNV = @MaNV AND ChucVu = N'Quản trị'))
+		BEGIN
+			RAISERROR (N'Mã nhân viên để trống, không tồn tại hoặc không có quyền thêm sản phẩm.', -1, -1)
+			ROLLBACK TRAN
+			RETURN
+		END
+
+		-- Mã sản phẩm để trống hoặc không tồn tại
+		IF (@MaSP IS NULL OR NOT EXISTS (SELECT* FROM SanPham sp WHERE sp.MaSP = @MaSP))
+		BEGIN
+			RAISERROR (N'Mã sản phẩm để trống hoặc không tồn tại.', -1, -1)
+			ROLLBACK TRAN
+			RETURN
+		END
+
+		-- Xóa sản phẩm
+			-- Xóa sản phẩm khỏi đơn hàng chưa giao
+			DELETE FROM CT_DonHang 
+			WHERE 
+				MaSP = @MaSP and
+				MaDH IN (SELECT * FROM DonHangChuaThanhToan(@MaSP))
+
+			--Xóa sản phẩm khỏi bảng sản phẩm
+			DELETE FROM SanPham WHERE MaSP = @MaSP
+	COMMIT TRAN
+END
+GO

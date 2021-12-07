@@ -38,7 +38,7 @@ CREATE TABLE [NhanVien] (
   [MaNV] varchar(8),
   [TenNV] nvarchar(50),
   [ChucVu] nvarchar(50),
-  [Luong] numeric(8, 2),
+  [Luong] numeric(9, 2),
   PRIMARY KEY ([MaNV])
 );
 go
@@ -115,10 +115,10 @@ CREATE TABLE [PhieuGiaoHang] (
 go
 
 CREATE TABLE [SanPham] (
-  [MaSP] varchar(8),
+  [MaSP] int identity(1,1),
   [TenSP] nvarchar(50),
   [MaLoai] varchar(8),
-  [DonGia] numeric(8, 2),
+  [DonGia] numeric(9, 2),
   [SoLuongTon] int,
   [MaNCCap] varchar(8),
   PRIMARY KEY ([MaSP]),
@@ -137,9 +137,9 @@ go
 
 CREATE TABLE [CT_PhieuGiao_SP] (
   [MaPhieuGiao] int,
-  [MaSP] varchar(8),
+  [MaSP] int,
   [SoLuong] int,
-  [DonGia] numeric(8, 2),
+  [DonGia] numeric(9, 2),
   PRIMARY KEY ([MaPhieuGiao], [MaSP]),
   CONSTRAINT [FK_CT_PhieuGiao_SP.MaPhieuGiao]
     FOREIGN KEY ([MaPhieuGiao])
@@ -154,7 +154,7 @@ go
 
 CREATE TABLE [CT_PhieuDat_SP] (
   [MaPhieuDat] int,
-  [MaSP] varchar(8),
+  [MaSP] int,
   [SoLuong] int,
   PRIMARY KEY ([MaPhieuDat], [MaSP]),
   CONSTRAINT [FK_CT_PhieuDat_SP.MaSP]
@@ -169,10 +169,10 @@ CREATE TABLE [CT_PhieuDat_SP] (
 go
 
 CREATE TABLE [CT_DonHang] (
-  [MaSP] varchar(8),
+  [MaSP] int,
   [MaDH] int,
   [SoLuong] int default 1,
-  [DonGia] numeric(8, 2) default 0,
+  [DonGia] numeric(9, 2) default 0,
   [ThanhTien] as [SoLuong] * [DonGia],
   PRIMARY KEY ([MaSP], [MaDH]),
   CONSTRAINT [FK_CT_DonHang.MaDH]
@@ -183,7 +183,6 @@ CREATE TABLE [CT_DonHang] (
   CONSTRAINT [FK_CT_DonHang.MaSP]
     FOREIGN KEY ([MaSP])
       REFERENCES [SanPham]([MaSP])
-	  on update CASCADE
 );
 go
 
