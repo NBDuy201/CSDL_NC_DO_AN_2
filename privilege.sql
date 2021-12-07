@@ -59,18 +59,14 @@ GRANT SELECT ON [dbo].[SANPHAM] TO [CustomerROLE]
 GRANT SELECT ON [dbo].[DONHANG] TO [CustomerROLE]
 GO
 
---[Phân hệ tài xế(MAKHACHHANG)]---------------------------------------------------
+--[Phân hệ tài xế(MaNV)]---------------------------------------------------
 USE QLCuaHang
 GO
 CREATE ROLE [DriverROLE] AUTHORIZATION [dbo]
 GO
---ALTER ROLE [CustomerROLE] ADD MEMBER [DriverROLE]
-GO
-GRANT SELECT,UPDATE ON [dbo].[TAIXE] TO [DriverROLE]	--self edit profile
-GRANT SELECT,UPDATE(MATAIXE, TINHTRANGDONHANG) ON [dbo].[DONHANG] TO [DriverROLE]
-GRANT EXEC ON [dbo].[XemDonHang] TO [DriverROLE]
-GRANT EXEC ON [dbo].[ChonDonHang] TO [DriverROLE]
-GRANT EXEC ON [dbo].[TraCuuDonHangDaGiao]TO [DriverROLE]
+GRANT EXEC ON [dbo].Taixe_XemDonHang TO [DriverROLE]
+GRANT EXEC ON [dbo].TaiXe_ChonDonHang TO [DriverROLE]
+GRANT EXEC ON [dbo].TaiXe_CapNhatDonHang TO [DriverROLE]
 GO
 
 

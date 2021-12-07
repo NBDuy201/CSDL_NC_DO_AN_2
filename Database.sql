@@ -48,7 +48,6 @@ CREATE TABLE [KhuyenMai] (
   [NgayBD] date,
   [NgayKT] date,
   [MucKM] float,
-  [Freeship] nvarchar(50),
   PRIMARY KEY ([MaKM])
 );
 go
@@ -60,9 +59,11 @@ CREATE TABLE [DonHang] (
   [TinhTrang] nvarchar(50),
   [MaKM] int default NULL,
   [MaNV] varchar(8),
-  TongTien numeric(8, 2) default 0,
-  SoTienGiam numeric(8, 2) default 0,
-  GiaCuoiCung AS TongTien - SoTienGiam,
+  [Freeship] nvarchar(50) DEFAULT N'Không',
+  PhiVanChuyen NUMERIC(5, 2) default 30,
+  TongTien numeric(9, 2) default 0,
+  SoTienGiam numeric(9, 2) default 0,
+  GiaCuoiCung AS (TongTien + PhiVanChuyen) - SoTienGiam,
   PRIMARY KEY ([MaDH]),
   CONSTRAINT [FK_DonHang.MaKH]
     FOREIGN KEY ([MaKH])
@@ -72,13 +73,11 @@ CREATE TABLE [DonHang] (
   CONSTRAINT [FK_DonHang.MaNV]
     FOREIGN KEY ([MaNV])
       REFERENCES [NhanVien]([MaNV])
-	  on update CASCADE
-	  ON DELETE CASCADE,
+	  ON DELETE SET DEFAULT,
   CONSTRAINT [FK_DonHang.MaKM]
     FOREIGN KEY ([MaKM])
       REFERENCES [KhuyenMai]([MaKM])
-	  on update CASCADE
-	  ON DELETE CASCADE
+	  ON DELETE SET DEFAULT
 );
 go
 
@@ -160,12 +159,12 @@ CREATE TABLE [CT_PhieuDat_SP] (
   PRIMARY KEY ([MaPhieuDat], [MaSP]),
   CONSTRAINT [FK_CT_PhieuDat_SP.MaSP]
     FOREIGN KEY ([MaSP])
-      REFERENCES [SanPham]([MaSP])
-	  on update CASCADE
-	  ON DELETE CASCADE,
+      REFERENCES [SanPham]([MaSP]),
   CONSTRAINT [FK_CT_PhieuDat_SP.MaPhieuDat]
     FOREIGN KEY ([MaPhieuDat])
       REFERENCES [PhieuDatHang]([MaPhieuDat])
+	  on update CASCADE
+	  ON DELETE CASCADE
 );
 go
 
@@ -252,17 +251,18 @@ AS
 BEGIN
 	DECLARE 
 		@maDHang int,
-		@maKMai int
+		@maKMai INT,
+		@FreeShipCheck NVARCHAR(50)
 	
 	-- Insert dòng mới hoặc update trên TongTien
 	IF (EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM DELETED)) OR Update(TongTien) OR Update(MaKM)
 	Begin
 		-- Lấy thông tin
-		SELECT @maDHang = MaDH, @maKMai = MaKM
+		SELECT @maDHang = MaDH, @maKMai = MaKM, @FreeShipCheck = Freeship
 		FROM INSERTED
 
 		-- Lấy phần trăm tiền giảm
-		DECLARE @mucKM float = (SELECT MucKM 
+		DECLARE @mucKM FLOAT = (SELECT MucKM
 								FROM KhuyenMai
 								where MaKM = @maKMai)
 		
@@ -274,11 +274,19 @@ BEGIN
 			WHERE DonHang.MaDH = @maDHang
 		End
 		Else
-		Begin
+		BEGIN
 			UPDATE DonHang
 			SET SoTienGiam = TongTien * @mucKM
 			WHERE DonHang.MaDH = @maDHang
-		End
+		END
+		
+		-- Nếu có free ship
+		IF(@FreeShipCheck = N'Có')
+		BEGIN
+			UPDATE DonHang
+			SET PhiVanChuyen = 0
+			WHERE DonHang.MaDH = @maDHang
+		END
 	End
 END
 GO
