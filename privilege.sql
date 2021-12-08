@@ -1,73 +1,43 @@
 ﻿--[Phân hệ quản trị]---------------------------------------------------
 USE QLCuaHang
 GO
-CREATE ROLE [AdminROLE] AUTHORIZATION [dbo]
+CREATE ROLE NVQuanTri AUTHORIZATION [dbo]
 GO
-ALTER ROLE [db_securityadmin] ADD MEMBER [AdminROLE]
-GO
-GRANT SELECT ON SanPham TO [AdminROLE]
-GRANT EXEC ON NhanVienQuanTri_ThemSanPham TO [AdminROLE]
-GRANT EXEC ON NhanVienQuanTri_UpdateSanPham TO [AdminROLE]
-GRANT EXEC ON [dbo].[newlogin_TaiXe] TO [AdminROLE]
-GRANT EXEC ON [dbo].[grantAccount] TO [AdminROLE]
-GRANT EXEC ON [dbo].[denyAccount] TO [AdminROLE]
+GRANT SELECT ON SanPham TO NVQuanTri
+GRANT EXEC ON NhanVienQuanTri_ThemSanPham TO NVQuanTri
+GRANT EXEC ON NhanVienQuanTri_UpdateSanPham TO NVQuanTri
+GRANT EXEC ON NhanVienQuanTri_TaoPhieuDathang TO NVQuanTri
+GRANT EXEC ON NhanVienQuanTri_ThemSanPhamVaoPhieuDat TO NVQuanTri
 GO
 
---[Phân hệ nhân viên]---------------------------------------------------
+--[Phân hệ nhân viên quản lý]---------------------------------------------------
 USE QLCuaHang
 GO
-CREATE ROLE [StaffROLE] AUTHORIZATION [dbo]
+CREATE ROLE NVQuanLy AUTHORIZATION [dbo]
 GO
-GRANT SELECT,UPDATE(THOIGIANHIEULUC, TINHTRANGPHIKICHHOAT) ON [dbo].[HOPDONG] TO [StaffROLE]
-GRANT EXEC ON Approve_Contract TO [StaffROLE]
-GRANT EXEC ON Extend_Contract TO [StaffROLE]
-GRANT EXEC ON Approve_MonthlyFee TO [StaffROLE]
-GRANT EXEC ON View_PendingContract TO [StaffROLE]
-GO
-
---[Phân hệ đối tác(MADOITAC)]---------------------------------------------------
-USE QLCuaHang
-GO
-CREATE ROLE [PartnerROLE] AUTHORIZATION [dbo]
-GO
-GRANT SELECT,UPDATE ON [dbo].[DOITAC] TO [PartnerROLE]	--self edit profile
-GRANT SELECT,UPDATE(TINHTRANGDONHANG) ON [dbo].[DONHANG] TO [PartnerROLE]
-GRANT SELECT,INSERT,DELETE,UPDATE ON [dbo].[CHINHANH_SANPHAM] TO [PartnerROLE]
-GRANT SELECT,INSERT ON [dbo].[HOPDONG] TO [PartnerROLE]
-GRANT SELECT ON [dbo].[THEODOIHOPDONG] TO [PartnerROLE]
-GRANT EXEC ON View_Contract TO [PartnerROLE]
-GRANT EXEC ON insertContract TO [PartnerROLE]
-GRANT EXEC ON updateTinhTrangDonHang TO [PartnerROLE]
-GRANT EXEC ON updateDiaChi TO [PartnerROLE]
-GRANT EXEC ON deleteSanPham_ChiNhanh TO [PartnerROLE]
-GRANT EXEC ON updateSLSanPham_ChiNhanh TO [PartnerROLE]
-GRANT EXEC ON update_GiaSanPham TO [PartnerROLE]
+GRANT SELECT ON DonHang TO NVQuanLy
+GRANT EXEC ON NhanVienQuanLy_UpdateTinhTrangDonHang TO NVQuanLy
+GRANT EXEC ON NhanVienQuanLy_ThongKeDoanhThuThang TO NVQuanLy
+GRANT EXEC ON NhanVienQuanLy_ThemKhuyenMai TO NVQuanLy
+GRANT DELETE ON KhuyenMai TO NVQuanLy
 GO
 
 --[Phân hệ khách hàng(MAKHACHHANG)]---------------------------------------------------
 USE QLCuaHang
 GO
-CREATE ROLE [CustomerROLE] AUTHORIZATION [dbo]
+CREATE ROLE KhachHang AUTHORIZATION [dbo]
 GO
-GRANT SELECT,UPDATE ON [dbo].[KHACHHANG] TO [CustomerROLE]	--self edit profile
-GRANT SELECT ON [dbo].[DOITAC] TO [CustomerROLE]
-GRANT SELECT ON [dbo].[CHINHANH] TO [CustomerROLE]
-GRANT SELECT ON [dbo].[CHINHANH_SANPHAM] TO [CustomerROLE]
-GRANT SELECT ON [dbo].[SANPHAM] TO [CustomerROLE]
-GRANT SELECT ON [dbo].[DONHANG] TO [CustomerROLE]
-GO
+
 
 --[Phân hệ tài xế(MaNV)]---------------------------------------------------
 USE QLCuaHang
 GO
-CREATE ROLE [DriverROLE] AUTHORIZATION [dbo]
+CREATE ROLE TaiXe AUTHORIZATION [dbo]
 GO
-GRANT EXEC ON [dbo].Taixe_XemDonHang TO [DriverROLE]
-GRANT EXEC ON [dbo].TaiXe_ChonDonHang TO [DriverROLE]
-GRANT EXEC ON [dbo].TaiXe_CapNhatDonHang TO [DriverROLE]
+GRANT EXEC ON [dbo].Taixe_XemDonHang TO TaiXe
+GRANT EXEC ON [dbo].TaiXe_ChonDonHang TO TaiXe
+GRANT EXEC ON [dbo].TaiXe_CapNhatDonHang TO TaiXe
 GO
-
-
 
 
 

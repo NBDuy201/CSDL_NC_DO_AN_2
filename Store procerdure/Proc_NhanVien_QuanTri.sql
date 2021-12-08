@@ -7,7 +7,7 @@ GO
 --- Output: Sản phẩm được thêm vào với thông tin trong input
 -- =============================================
 CREATE OR ALTER PROC NhanVienQuanTri_ThemSanPham
-	@MaNV INT,
+	@MaNV VARCHAR(8),
 	@TenSP nvarchar(50),
 	@MaLoai varchar(8),
 	@DonGia numeric(9, 2),
@@ -70,7 +70,7 @@ GO
 --- Output: Sản phẩm được cập nhật với thông tin tương ứng
 -- =============================================
 CREATE OR ALTER PROC NhanVienQuanTri_UpdateSanPham
-	@MaNV INT,
+	@MaNV VARCHAR(8),
 	@MaSP INT,
 	@ten NVARCHAR(50),
 	@gia NUMERIC(9,2),
@@ -142,7 +142,7 @@ GO
 --- Output: Thêm phiếu đặt mới + trả về mã phiếu đặt được tạo
 -- =============================================
 CREATE OR ALTER PROC NhanVienQuanTri_TaoPhieuDathang
-	@MaNV INT,
+	@MaNV VARCHAR(8),
 	@MaNCCap VARCHAR(8)
 AS
 BEGIN
@@ -183,7 +183,7 @@ GO
 --- Output: Thêm sản phẩm mới vào phiếu đặt
 -- =============================================
 CREATE OR ALTER PROC NhanVienQuanTri_ThemSanPhamVaoPhieuDat
-	@MaNV INT,
+	@MaNV VARCHAR(8),
 	@MaPhieuDat INT,
 	@MaSP INT,
 	@soluong INT
