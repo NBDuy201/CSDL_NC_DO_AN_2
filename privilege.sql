@@ -45,6 +45,12 @@ GRANT EXEC ON [dbo].TaiXe_ChonDonHang TO TaiXe
 GRANT EXEC ON [dbo].TaiXe_CapNhatDonHang TO TaiXe
 GO
 
+--[Phân hệ nhà cung cấp]---------------------------------------------------
+USE QLCuaHang
+GO
+CREATE ROLE NhaCungCap AUTHORIZATION [dbo]
+GO
+GRANT EXEC ON NhaCCap_LapPhieugiao TO NhaCungCap
 
 
 --[Login]---------------------------------------------------------------
