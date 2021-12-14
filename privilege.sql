@@ -27,7 +27,13 @@ USE QLCuaHang
 GO
 CREATE ROLE KhachHang AUTHORIZATION [dbo]
 GO
-
+GRANT EXEC ON KhachHang_XemTatCa_Sanpham TO KhachHang
+GRANT EXEC ON KhachHang_Xem_CT_Sanpham TO KhachHang
+GRANT EXEC ON KhachHang_XemTatCa_DonHang TO KhachHang
+GRANT EXEC ON KhachHang_Xem_CT_DonHang TO KhachHang
+GRANT EXEC ON KhachHang_Them_GioHang TO KhachHang
+GRANT EXEC ON KhachHang_ThemSanPham_GioHang TO KhachHang
+GRANT EXEC ON KhachHang_XacNhan_DonHang TO KhachHang
 
 --[Phân hệ tài xế(MaNV)]---------------------------------------------------
 USE QLCuaHang
