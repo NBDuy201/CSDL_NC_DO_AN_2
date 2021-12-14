@@ -1,65 +1,51 @@
-﻿use TEST_QLCuaHang
+﻿use QLCuaHang
 go
 
--- Khách hàng
--- xem *TẤT CẢ* sản phẩm
+---- KHÁCH HÀNG
+-- xem full san pham
 CREATE 
 --ALTER 
-PROC KhachHang_Xem_Sanpham
+PROC KhachHang_XemTatCa_Sanpham
 AS
 BEGIN TRAN
 	select * FROM SanPham
 COMMIT
 GO
 
-EXEC KhachHang_Xem_Sanpham
+EXEC KhachHang_XemTatCa_Sanpham
 GO
 
 -- xem CHI TIẾT sản phẩm
 CREATE 
 --ALTER 
 PROC KhachHang_Xem_CT_Sanpham
-	@MaSP varchar(8),
 	@TenSP nvarchar(50)
 AS
 BEGIN TRAN
 	select * FROM SanPham
-	where MaSP = @MaSP and TenSP = @TenSP
+	where TenSP = @TenSP
 COMMIT
 GO
 
-select * from DonHang
-select * from CT_DonHang
-select * from KhuyenMai
-select * from KhacHang
-select * from NhanVien
-go
-insert into KhacHang values (N'Thủ Khoa Nha', '202 Thái Phú', 0911222999)
-go
-insert into NhanVien values ('NV03', N'Minh Trung', N'Tài xế', 9000)  
-go
-insert into KhuyenMai values ('2021-7-1', '2021-7-10', 0.30)
-go
-insert into CT_DonHang values ('SP02', 1, 2, 500)
-go
-insert into DonHang values ('2021-7-1', 2, N'Đang lấy hàng', 2, 'NV02', N'Không', 10, 0, 0)
+EXEC KhachHang_Xem_CT_Sanpham N'Red and pink'
+GO
 
-go
-
--- xem đơn hàng
+-- xem tất cả đơn hàng
 CREATE 
 --ALTER 
-PROC KhachHang_Xem_DonHang
+PROC KhachHang_XemTatCa_DonHang
+	@MaKH int
 AS
 BEGIN TRAN
 	select * FROM DonHang
+	where @MaKH = MaKH
 COMMIT
 GO
 
-EXEC KhachHang_Xem_DonHang
+EXEC KhachHang_XemTatCa_DonHang 1
 GO
 
--- xem CHI TIẾT sản phẩm
+-- xem CHI TIẾT đơn hàng
 CREATE 
 --ALTER 
 PROC KhachHang_Xem_CT_DonHang
@@ -74,26 +60,50 @@ GO
 EXEC KhachHang_Xem_CT_DonHang 1
 GO
 
--- KHÁCH HÀNG THÊM SẢN PHẨM VÀO GIỎ VÀ TIẾN HÀNG VIỆC THANH TOÁN
+-- tạo dữ liệu cho khuyến mãi, khách hàng và nhân viên
+select * from KhuyenMai
+select * from KhacHang
+select * from NhanVien
+go
+insert into KhacHang (TenKH, DiaChi, Sdt) values (N'Thủ Khoa Nha', '202 Thái Phú', 0911222999)
+go
+insert into NhanVien (MaNV, TenNV, ChucVu, Luong) values ('NV01', N'Minh Trung', N'Tài xế', 9000)  
+go
+insert into KhuyenMai (NgayBD, NgayKT, MucKM) values ('2021-7-1', '2021-7-10', 0.30)
+go
+
+
+-- bỏ sản phẩm vào giỏ hàng
+select * FROM DonHang
+select * FROM CT_DonHang
+go
 CREATE 
 --ALTER 
-PROC KhachHang_DatHang_ThanhToan
-	@NgayLapDon date,
-	@MaKH int,
-	@TinhTrang nvarchar(50),
-	@MaKM int,
-	@MaNV varchar(8),
-	@FreeShip nvarchar(50),
-	@PhiVanChuyen NUMERIC(5, 2),
-	@TongTien NUMERIC(9, 2),
-	@SoTienGiam NUMERIC(9, 2),
-	@MaSP varchar(8), 
-	@MaDH int,
-	@SoLuong int,
-	@Dongia numeric(8, 2)
+PROC KhachHang_SanPham_GioHang
+	@MaKH INT
 AS
 BEGIN TRAN
-	IF (@MaSP IS NULL OR NOT EXISTS (SELECT * FROM SanPham))
+	insert into DonHang (NgayLapDon, MaKH, TinhTrang, MaKM, MaNV, Freeship)
+	values (NULL, @MaKH, N'Chưa đồng ý', NULL, NULL, NULL)
+COMMIT
+GO
+
+EXEC KhachHang_SanPham_GioHang 2
+GO
+
+-- xác nhận và thanh toán đơn hàng
+CREATE 
+--ALTER 
+PROC KhachHang_XacNhan_DonHang
+	@MaDH int,
+	@NgayLapDon date,
+    @MaKM int,
+	@MaSP int,
+	@SoLuong int,
+	@DonGia numeric(9, 2)
+AS
+BEGIN TRAN
+		IF (@MaSP IS NULL OR NOT EXISTS (SELECT * FROM SanPham))
 	BEGIN
 		RAISERROR(N'Không tồn sản phẩm', -1, -1)
 		ROLLBACK TRAN
@@ -114,11 +124,16 @@ BEGIN TRAN
 		RETURN
 	END
 
-	insert into DonHang values (@NgayLapDon, @MaKH, @TinhTrang, @MaKM, @MaNV, @FreeShip, @PhiVanChuyen, @TongTien, @SoTienGiam)
+	update DonHang set NgayLapDon = @NgayLapDon, TinhTrang = N'Đồng ý', MaKM = @MaKM  where MaDH = @MaDH
+	insert into CT_DonHang (MaSP, MaDH, SoLuong, DonGia) values (@MaSP, @MaDH, @SoLuong, @DonGia)
+	update SanPham set SoLuongTon = SoLuongTon - @SoLuong where MaSP = @MaSP
 
-	insert into CT_DonHang values (@MaSP, @MaDH, @SoLuong, @DonGia)
-
-COMMIT TRAN
+COMMIT
 GO
 
-EXEC KhachHang_DatHang_ThanhToan '2021-7-2', 2, N'Đang chờ', 3, 'NV02', N'Không', 0, 0, 0, 'SP01', 2, 3, 100
+EXEC KhachHang_XacNhan_DonHang 2, '2021-7-5', 1, 2, 2, 40.0
+
+GO
+select * from DonHang
+select * from CT_DonHang
+select * from SanPham
