@@ -3,8 +3,7 @@ go
 
 ---- KHÁCH HÀNG
 -- xem full san pham
-CREATE 
---ALTER 
+CREATE or ALTER 
 PROC KhachHang_XemTatCa_Sanpham
 AS
 BEGIN TRAN
@@ -16,8 +15,7 @@ EXEC KhachHang_XemTatCa_Sanpham
 GO
 
 -- xem CHI TIẾT sản phẩm
-CREATE 
---ALTER 
+CREATE or ALTER 
 PROC KhachHang_Xem_CT_Sanpham
 	@TenSP nvarchar(50)
 AS
@@ -31,8 +29,7 @@ EXEC KhachHang_Xem_CT_Sanpham N'Red and pink'
 GO
 
 -- xem tất cả đơn hàng
-CREATE 
---ALTER 
+CREATE or ALTER 
 PROC KhachHang_XemTatCa_DonHang
 	@MaKH int
 AS
@@ -46,8 +43,7 @@ EXEC KhachHang_XemTatCa_DonHang 1
 GO
 
 -- xem CHI TIẾT đơn hàng
-CREATE 
---ALTER 
+CREATE or ALTER 
 PROC KhachHang_Xem_CT_DonHang
 	@MaDH INT
 AS
@@ -73,13 +69,12 @@ insert into KhuyenMai (NgayBD, NgayKT, MucKM) values ('2021-7-1', '2021-7-10', 0
 go
 
 
--- bỏ sản phẩm vào giỏ hàng
+-- tạo giỏ hàng mới
 select * FROM DonHang
 select * FROM CT_DonHang
 go
-CREATE 
---ALTER 
-PROC KhachHang_SanPham_GioHang
+CREATE or ALTER 
+PROC KhachHang_Them_GioHang
 	@MaKH INT
 AS
 BEGIN TRAN
@@ -88,50 +83,68 @@ BEGIN TRAN
 COMMIT
 GO
 
-EXEC KhachHang_SanPham_GioHang 2
+EXEC KhachHang_Them_GioHang 3
 GO
 
+-- Thêm vào giỏ hàng
+CREATE or ALTER 
+PROC KhachHang_ThemSanPham_GioHang
+	@MaSP INT,
+	@MaDH int,
+	@SoLuong int
+AS
+BEGIN TRAN
+	IF (@MaSP IS NULL OR NOT EXISTS (SELECT * FROM SanPham))
+	BEGIN
+		RAISERROR(N'Không tồn sản phẩm', -1, -1)
+		ROLLBACK TRAN
+		RETURN
+	END
+	
+	declare @dongia int
+	set @dongia = (select DonGia from SanPham where MaSP = @MaSP)
+
+	insert into CT_DonHang (MaSP, MaDH, SoLuong, DonGia) values (@MaSP, @MaDH, @SoLuong, @DonGia)
+
+COMMIT
+GO
+
+Exec KhachHang_ThemSanPham_GioHang 2, 5, 4
+go
+
 -- xác nhận và thanh toán đơn hàng
-CREATE 
---ALTER 
+CREATE or ALTER 
 PROC KhachHang_XacNhan_DonHang
 	@MaDH int,
 	@NgayLapDon date,
     @MaKM int,
-	@MaSP int,
-	@SoLuong int,
-	@DonGia numeric(9, 2)
+	@MaSP int
 AS
 BEGIN TRAN
-		IF (@MaSP IS NULL OR NOT EXISTS (SELECT * FROM SanPham))
+	IF (@MaSP IS NULL OR NOT EXISTS (SELECT * FROM SanPham))
 	BEGIN
 		RAISERROR(N'Không tồn sản phẩm', -1, -1)
 		ROLLBACK TRAN
 		RETURN
 	END
 
-	IF (@SoLuong < 0)
-	BEGIN
-		RAISERROR(N'Số lượng không được âm', -1, -1)
-		ROLLBACK TRAN
-		RETURN
-	END
-
-	IF (@DonGia < 0)
-	BEGIN
-		RAISERROR(N'Đơn giá không được âm', -1, -1)
-		ROLLBACK TRAN
-		RETURN
-	END
-
 	update DonHang set NgayLapDon = @NgayLapDon, TinhTrang = N'Đồng ý', MaKM = @MaKM  where MaDH = @MaDH
-	insert into CT_DonHang (MaSP, MaDH, SoLuong, DonGia) values (@MaSP, @MaDH, @SoLuong, @DonGia)
-	update SanPham set SoLuongTon = SoLuongTon - @SoLuong where MaSP = @MaSP
 
+	UPDATE SanPham	SET SoLuongTon = SoLuongTon - CT_DH.SoLuong	FROM SanPham SP	INNER JOIN CT_DonHang CT_DH	ON SP.MaSP = CT_DH.MaSP
+	AND CT_DH.MaDH = @MaDH
+
+	declare @SoLuong2 int
+	set @SoLuong2 = (select top 1 SoLuongTon from SanPham where SoLuongTon < 0)
+	if @SoLuong2 <= 0
+	BEGIN
+		RAISERROR(N'Đã hết hàng', -1, -1)
+		ROLLBACK TRAN
+		RETURN
+	END
 COMMIT
 GO
 
-EXEC KhachHang_XacNhan_DonHang 2, '2021-7-5', 1, 2, 2, 40.0
+EXEC KhachHang_XacNhan_DonHang 5, '2021-7-10', 1, 2
 
 GO
 select * from DonHang
