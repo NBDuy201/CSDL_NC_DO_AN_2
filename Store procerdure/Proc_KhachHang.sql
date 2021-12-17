@@ -56,23 +56,7 @@ GO
 EXEC KhachHang_Xem_CT_DonHang 1
 GO
 
--- tạo dữ liệu cho khuyến mãi, khách hàng và nhân viên
-select * from KhuyenMai
-select * from KhacHang
-select * from NhanVien
-go
-insert into KhacHang (TenKH, DiaChi, Sdt) values (N'Thủ Khoa Nha', '202 Thái Phú', 0911222999)
-go
-insert into NhanVien (MaNV, TenNV, ChucVu, Luong) values ('NV01', N'Minh Trung', N'Tài xế', 9000)  
-go
-insert into KhuyenMai (NgayBD, NgayKT, MucKM) values ('2021-7-1', '2021-7-10', 0.30)
-go
-
-
 -- tạo giỏ hàng mới
-select * FROM DonHang
-select * FROM CT_DonHang
-go
 CREATE or ALTER 
 PROC KhachHang_Them_GioHang
 	@MaKH INT
@@ -130,7 +114,11 @@ BEGIN TRAN
 
 	update DonHang set NgayLapDon = @NgayLapDon, TinhTrang = N'Đồng ý', MaKM = @MaKM  where MaDH = @MaDH
 
-	UPDATE SanPham	SET SoLuongTon = SoLuongTon - CT_DH.SoLuong	FROM SanPham SP	INNER JOIN CT_DonHang CT_DH	ON SP.MaSP = CT_DH.MaSP
+	UPDATE SanPham
+	SET SoLuongTon = SoLuongTon - CT_DH.SoLuong
+	FROM SanPham SP
+	INNER JOIN CT_DonHang CT_DH
+	ON SP.MaSP = CT_DH.MaSP
 	AND CT_DH.MaDH = @MaDH
 
 	declare @SoLuong2 int
@@ -145,8 +133,3 @@ COMMIT
 GO
 
 EXEC KhachHang_XacNhan_DonHang 5, '2021-7-10', 1, 2
-
-GO
-select * from DonHang
-select * from CT_DonHang
-select * from SanPham

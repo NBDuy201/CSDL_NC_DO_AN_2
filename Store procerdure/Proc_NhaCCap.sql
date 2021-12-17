@@ -2,39 +2,7 @@
 go
 
 ---- NHÀ CUNG CẤP
-
-Insert into NhaCungCap (MaNCCap, Ten, DiaChi, Sdt) values ('NCC02', N'Lương Bá Quân', N'101 Bách Khu', '0903920983')
-select * from NhaCungCap 
-select * from PhieuDatHang
-go
-
-insert into PhieuDatHang (NgayDat, MaNCCap) values ( '2021-7-1', 'NCC02')
-go
-
-select * from PhieuGiaoHang
-go
-
-insert into PhieuGiaoHang (Ngaygiao, MaPhieuDat) values ( '2021-7-12', 1)
-go
-
-select * from LoaiSanPham
-go
-insert into LoaiSanPham (MaLoai, TenLoai) values ('L01', N'Hoa gia đình')
-go
-
-select * from SanPham
-go
-insert into SanPham (TenSP, MaLoai, DonGia, SoLuongTon, MaNCCAP) values ( N'Red and pink', 'L01', 90.000, 10, 'NCC02')
-go
-
-select * from CT_PhieuGiao_SP
-go
-
-insert into CT_PhieuGiao_SP (MaPhieuGiao, MaSP, SoLuong, DonGia) values (1, 'SP01', 2, 600.000)
-go
-
-CREATE 
---ALTER 
+CREATE or ALTER  
 PROC NhaCCap_LapPhieugiao
 	@MaphieuGiao int,
 	@MaPhieuDat int,
@@ -81,6 +49,3 @@ GO
 
 EXEC NhaCCap_LapPhieugiao 5, 2, 2, '2021-7-4', 1, 92.000
 
-go
-select * from PhieuGiaoHang
-select * from CT_PhieuGiao_SP
