@@ -39,7 +39,7 @@ BEGIN TRAN
 COMMIT
 GO
 
-EXEC KhachHang_XemTatCa_DonHang 1
+--EXEC KhachHang_XemTatCa_DonHang 1
 GO
 
 -- xem CHI TIẾT đơn hàng
