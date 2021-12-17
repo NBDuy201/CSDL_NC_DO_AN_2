@@ -11,7 +11,7 @@ BEGIN TRAN
 COMMIT
 GO
 
-EXEC KhachHang_XemTatCa_Sanpham
+--EXEC KhachHang_XemTatCa_Sanpham
 GO
 
 -- xem CHI TIẾT sản phẩm
@@ -25,7 +25,7 @@ BEGIN TRAN
 COMMIT
 GO
 
-EXEC KhachHang_Xem_CT_Sanpham N'Red and pink'
+--EXEC KhachHang_Xem_CT_Sanpham N'Red and pink'
 GO
 
 -- xem tất cả đơn hàng
@@ -53,7 +53,7 @@ BEGIN TRAN
 COMMIT
 GO
 
-EXEC KhachHang_Xem_CT_DonHang 1
+--EXEC KhachHang_Xem_CT_DonHang 1
 GO
 
 -- tạo giỏ hàng mới
@@ -67,7 +67,7 @@ BEGIN TRAN
 COMMIT
 GO
 
-EXEC KhachHang_Them_GioHang 3
+--EXEC KhachHang_Them_GioHang 3
 GO
 
 -- Thêm vào giỏ hàng
@@ -93,7 +93,7 @@ BEGIN TRAN
 COMMIT
 GO
 
-Exec KhachHang_ThemSanPham_GioHang 2, 5, 4
+--Exec KhachHang_ThemSanPham_GioHang 2, 5, 4
 go
 
 -- xác nhận và thanh toán đơn hàng
@@ -132,4 +132,4 @@ BEGIN TRAN
 COMMIT
 GO
 
-EXEC KhachHang_XacNhan_DonHang 5, '2021-7-10', 1, 2
+--EXEC KhachHang_XacNhan_DonHang 5, '2021-7-10', 1, 2

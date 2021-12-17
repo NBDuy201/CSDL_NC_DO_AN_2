@@ -47,5 +47,5 @@ BEGIN TRAN
 COMMIT TRAN
 GO
 
-EXEC NhaCCap_LapPhieugiao 5, 2, 2, '2021-7-4', 1, 92.000
+--EXEC NhaCCap_LapPhieugiao 5, 2, 2, '2021-7-4', 1, 92.000
 
