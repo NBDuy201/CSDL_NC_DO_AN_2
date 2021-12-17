@@ -116,7 +116,7 @@ CREATE OR ALTER PROC NhanVienQuanLy_ThemKhuyenMai
 	@MaNV VARCHAR(8),
 	@NgayBD date,
 	@NgayKT DATE,
-	@MucKM int
+	@MucKM FLOAT
 AS
 BEGIN
 	BEGIN TRAN
@@ -154,7 +154,7 @@ BEGIN
 
 		-- Thêm khuyến mãi
 		BEGIN TRY
-			INSERT INTO KhuyenMai (NgayBD, NgayKT, MucKM) VALUES (@NgayBD, @NgayKT, @MucKM / 100.00)
+			INSERT INTO KhuyenMai (NgayBD, NgayKT, MucKM) VALUES (@NgayBD, @NgayKT, @MucKM)
 		END TRY
 		BEGIN CATCH
 			RAISERROR (N'Đã xảy ra lỗi thêm khuyến mãi', -1, -1)
