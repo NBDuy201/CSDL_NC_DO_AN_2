@@ -39,6 +39,4 @@ BEGIN
 END
 GO
 
-exec newlogin_KhachHang 'Tuan', '0921', '012 KHOA HONG', 'tuan123', 'tuan123'
-
-select * from KhacHang
+--exec newlogin_KhachHang 'Tuan', '0921', '012 KHOA HONG', 'tuan123', 'tuan123'
