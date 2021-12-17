@@ -275,7 +275,7 @@ BEGIN
 		Else
 		BEGIN
 			UPDATE DonHang
-			SET SoTienGiam = TongTien * @mucKM
+			SET SoTienGiam = TongTien * (@mucKM / 100)
 			WHERE DonHang.MaDH = @maDHang
 		END
 		
