@@ -22,7 +22,7 @@ CREATE TABLE [KhachHang] (
   [DiaChi] nvarchar(100),
   [Sdt] varchar(10),
   [UserName] nvarchar(50),
-  [Pass] nvarchar(50)
+  [Pass] nvarchar(50),
   PRIMARY KEY ([MaKH])
 );
 go
@@ -33,7 +33,7 @@ CREATE TABLE [NhaCungCap] (
   [DiaChi] nvarchar(100),
   [Sdt] varchar(10),
   [UserName] nvarchar(50),
-  [Pass] nvarchar(50)
+  [Pass] nvarchar(50),
   PRIMARY KEY ([MaNCCap])
 );
 go
@@ -44,7 +44,7 @@ CREATE TABLE [NhanVien] (
   [ChucVu] nvarchar(50),
   [Luong] numeric(9, 2),
   [UserName] nvarchar(50),
-  [Pass] nvarchar(50)
+  [Pass] nvarchar(50),
   PRIMARY KEY ([MaNV])
 );
 go
