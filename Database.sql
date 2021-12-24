@@ -16,11 +16,13 @@ GO
 use QLCuaHang
 go
 
-CREATE TABLE [KhacHang] (
+CREATE TABLE [KhachHang] (
   [MaKH] int identity(1, 1),
   [TenKH] nvarchar(50),
   [DiaChi] nvarchar(100),
   [Sdt] varchar(10),
+  [UserName] nvarchar(50),
+  [Pass] nvarchar(50)
   PRIMARY KEY ([MaKH])
 );
 go
@@ -30,6 +32,8 @@ CREATE TABLE [NhaCungCap] (
   [Ten] nvarchar(50),
   [DiaChi] nvarchar(100),
   [Sdt] varchar(10),
+  [UserName] nvarchar(50),
+  [Pass] nvarchar(50)
   PRIMARY KEY ([MaNCCap])
 );
 go
@@ -39,6 +43,8 @@ CREATE TABLE [NhanVien] (
   [TenNV] nvarchar(50),
   [ChucVu] nvarchar(50),
   [Luong] numeric(9, 2),
+  [UserName] nvarchar(50),
+  [Pass] nvarchar(50)
   PRIMARY KEY ([MaNV])
 );
 go
@@ -67,7 +73,7 @@ CREATE TABLE [DonHang] (
   PRIMARY KEY ([MaDH]),
   CONSTRAINT [FK_DonHang.MaKH]
     FOREIGN KEY ([MaKH])
-      REFERENCES [khacHang]([MaKH])
+      REFERENCES [KhachHang]([MaKH])
 	  on update CASCADE
 	  ON DELETE CASCADE,
   CONSTRAINT [FK_DonHang.MaNV]
