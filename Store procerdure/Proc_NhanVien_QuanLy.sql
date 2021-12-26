@@ -53,12 +53,14 @@ GO
 CREATE OR ALTER PROC NhanVienQuanLy_ThongKeDoanhThuThang
 	@MaNV VARCHAR(8),
 	@Month INT,
-	@Year INT
+	@Year INT,
+	@offset int,
+	@rows int
 AS
 BEGIN
 	BEGIN TRAN
 		-- Mã nhân viên để trống hoặc không tồn tại
-		IF (@MaNV IS NULL OR NOT EXISTS (SELECT* FROM NhanVien WHERE MaNV = @MaNV AND ChucVu = N'Quản lý'))
+		IF (@MaNV IS NULL OR NOT EXISTS (SELECT* FROM NhanVien WHERE MaNV = @MaNV AND ChucVu = N'Quản lý' or ChucVu = N'Quản lí'))
 		BEGIN
 			RAISERROR (N'Mã nhân viên để trống, không tồn tại hoặc không có quyền cập nhật tình trạng đơn.', -1, -1)
 			ROLLBACK TRAN
@@ -86,16 +88,22 @@ BEGIN
 			-- Tính theo năm-tháng
 			IF @Month IS NOT NULL
 			BEGIN
-				SELECT ISNULL(SUM(GiaCuoiCung - PhiVanChuyen), 0) AS DoanhThu -- Trả về 0 hoặc Doanh thu
+				SELECT MaDH, ISNULL(SUM(GiaCuoiCung - PhiVanChuyen), 0) AS DoanhThu -- Trả về 0 hoặc Doanh thu
 				FROM DonHang
 				WHERE YEAR(NgayLapDon) = @Year AND MONTH(NgayLapDon) = @Month AND TinhTrang = N'Đã nhận'
+				Group by MaDH
+				order by MaDH 
+				offset @offset rows fetch next @rows rows only		
 			END
 			-- Tính theo năm
 			ELSE
 			BEGIN
-            	SELECT ISNULL(SUM(GiaCuoiCung - PhiVanChuyen), 0) AS DoanhThu
+            	SELECT MaDH, ISNULL(SUM(GiaCuoiCung - PhiVanChuyen), 0) AS DoanhThu
 				FROM DonHang
 				WHERE YEAR(NgayLapDon) = @Year AND TinhTrang = N'Đã nhận'
+				Group by MaDH
+				order by MaDH 
+				offset @offset rows fetch next @rows rows only
             END
 		END TRY
 		BEGIN CATCH
@@ -105,7 +113,6 @@ BEGIN
 		END CATCH
 	COMMIT TRAN
 END
-GO
 
 -- =============================================
 --- Thêm khuyến mãi
