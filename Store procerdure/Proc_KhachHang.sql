@@ -5,9 +5,13 @@ go
 -- xem full san pham
 CREATE or ALTER 
 PROC KhachHang_XemTatCa_Sanpham
+	@offset int,
+	@rows int
 AS
 BEGIN TRAN
 	select * FROM SanPham
+	order by MaSP 
+	offset @offset rows fetch next @rows rows only
 COMMIT
 GO
 
@@ -31,15 +35,19 @@ GO
 -- xem tất cả đơn hàng
 CREATE or ALTER 
 PROC KhachHang_XemTatCa_DonHang
-	@MaKH int
+	@MaKH int,
+	@offset int,
+	@rows int
 AS
 BEGIN TRAN
 	select * FROM DonHang
 	where @MaKH = MaKH
+	order by MaDH
+	offset @offset rows fetch next @rows rows only
 COMMIT
 GO
 
---EXEC KhachHang_XemTatCa_DonHang 1
+--EXEC KhachHang_XemTatCa_DonHang 1, 2, 2
 GO
 
 -- xem CHI TIẾT đơn hàng
