@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSDL_NC_DA_2", "DBMS_G15\CSDL_NC_DA_2.csproj", "{0D1BB1C5-E625-4EFA-8556-78F94D834A94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D1BB1C5-E625-4EFA-8556-78F94D834A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1BB1C5-E625-4EFA-8556-78F94D834A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1BB1C5-E625-4EFA-8556-78F94D834A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1BB1C5-E625-4EFA-8556-78F94D834A94}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CDE9F2C-B896-46D6-85ED-A9D4375B0CCC}
+	EndGlobalSection
+EndGlobal
