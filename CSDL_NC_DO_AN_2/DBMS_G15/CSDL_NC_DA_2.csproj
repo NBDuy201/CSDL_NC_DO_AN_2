@@ -64,6 +64,12 @@
     <Compile Include="DriverForm.Designer.cs">
       <DependentUpon>DriverForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DoanhThu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DoanhThu.Designer.cs">
+      <DependentUpon>DoanhThu.cs</DependentUpon>
+    </Compile>
     <Compile Include="HomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,17 +102,26 @@
     <Compile Include="StaffForm.Designer.cs">
       <DependentUpon>StaffForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PartnerAndCustomerProfile.cs">
+    <Compile Include="CustomerProfile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PartnerAndCustomerProfile.Designer.cs">
-      <DependentUpon>PartnerAndCustomerProfile.cs</DependentUpon>
+    <Compile Include="CustomerProfile.Designer.cs">
+      <DependentUpon>CustomerProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StaffProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StaffProfile.Designer.cs">
+      <DependentUpon>StaffProfile.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CustomerForm.resx">
       <DependentUpon>CustomerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomerSignUpForm.resx">
       <DependentUpon>CustomerSignUpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DoanhThu.resx">
+      <DependentUpon>DoanhThu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DriverForm.resx">
       <DependentUpon>DriverForm.cs</DependentUpon>
@@ -136,8 +151,11 @@
     <EmbeddedResource Include="StaffForm.resx">
       <DependentUpon>StaffForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PartnerAndCustomerProfile.resx">
-      <DependentUpon>PartnerAndCustomerProfile.cs</DependentUpon>
+    <EmbeddedResource Include="CustomerProfile.resx">
+      <DependentUpon>CustomerProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaffProfile.resx">
+      <DependentUpon>StaffProfile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

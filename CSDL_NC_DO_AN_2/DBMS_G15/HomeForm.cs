@@ -42,16 +42,15 @@ namespace DBMS_G15
                 btnProduct.Hide();
                 btnMoney.Hide();
                 btnDriver.Hide();
-                btnStaff.Hide();
                 btnCustomer.Hide();
             }
             else if(check == 2)
             {
-                btnProfile.Hide();
+                btnProduct.Hide();
                 btnPartner.Hide();
                 btnDriver.Hide();
-                btnStaff.Hide();
                 btnCustomer.Hide();
+                btnOrder.Hide();
             }
             else if(check == 3)
             {
@@ -131,7 +130,7 @@ namespace DBMS_G15
             navMenu.Height = btnPartner.Height;
             navMenu.Top = btnPartner.Top;
             navMenu.BringToFront();
-            OpenChildForm(new PartnerForm());
+            //OpenChildForm();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -176,25 +175,25 @@ namespace DBMS_G15
             navMenu.Height = btnMoney.Height;
             navMenu.Top = btnMoney.Top;
             navMenu.BringToFront();
+            OpenChildForm(new DoanhThu());
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-            navMenu.Height = btnProfile.Height;
-            navMenu.Top = btnProfile.Top;
-            navMenu.BringToFront();
             if (_check == 0)
             {
-                OpenChildForm(new PartnerAndCustomerProfile(_check, UserName));
+                navMenu.Height = btnProfile.Height;
+                navMenu.Top = btnProfile.Top;
+                navMenu.BringToFront();
+                OpenChildForm(new CustomerProfile(_check, UserName));
             }
-            //else if (role == "staff" || role == "developer")
-            //{
-            //    OpenChildForm(new PartnerAndCustomerProfile(check));
-            //}
-            //else if (role == "driver")
-            //{
-            //    OpenChildForm(new DriverProfile(IDDriver));
-            //}
+            else
+            {
+                navMenu.Height = btnProfile.Height;
+                navMenu.Top = btnProfile.Top;
+                navMenu.BringToFront();
+                OpenChildForm(new StaffProfile(_check, UserName));
+            }    
         }
     }
 }

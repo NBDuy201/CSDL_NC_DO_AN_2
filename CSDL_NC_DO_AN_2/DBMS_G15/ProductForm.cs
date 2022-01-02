@@ -169,6 +169,8 @@ namespace DBMS_G15
         }
         private void loadAfterAdd()
         {
+            LoadMaLoai();
+            LoadNhaCungCap();
             DataTable tb = new DataTable();
             command = connection.CreateCommand();
             command.CommandText = "select * from SANPHAM where TenSP = @TenSP";
@@ -180,14 +182,15 @@ namespace DBMS_G15
             tbID.Text = tb.Rows[0]["MaSP"].ToString();
             tbName.Text = tb.Rows[0]["TenSP"].ToString();
             tbPrice.Text = tb.Rows[0]["DonGia"].ToString();
-            cbbNhaCungCap.Text = tb.Rows[0]["MaNCCap"].ToString();
-            cbbMaLoai.Text = tb.Rows[0]["MaLoai"].ToString();
+            cbbNhaCungCap.SelectedValue = tb.Rows[0]["MaNCCap"].ToString();
+            cbbMaLoai.SelectedValue = tb.Rows[0]["MaLoai"].ToString();
+            tbSLTon.Text= tb.Rows[0]["SLTon"].ToString();
 
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=DBMS_ThucHanh_Nhom15;Integrated Security=True"))
+            using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True"))
             {
                 try
                 {
@@ -210,7 +213,6 @@ namespace DBMS_G15
                             updateCommand.ExecuteNonQuery();
                             autoLoadProductData();
                             MessageBox.Show("Cập nhật sản phẩm thành công");
-                            //loadAfterSave();
                         }
                     }
                     else
@@ -242,13 +244,19 @@ namespace DBMS_G15
                         SqlCommand checkProductExisted = new SqlCommand("select * from SANPHAM where TenSP = @TenSP", connection);
                         checkProductExisted.Parameters.AddWithValue("@TenSP", tbName.Text);
                         SqlDataReader reader2 = checkProductExisted.ExecuteReader();
-                        if (!reader2.HasRows)
+                        if (reader2.HasRows)
+                        {
+                            reader2.Close();
+                            MessageBox.Show("Sản phẩm đã tồn tại.");
+                            
+                        }
+                        else
                         {
                             reader2.Close();
                             SqlCommand cmd = new SqlCommand("exec NhanVienQuanTri_ThemSanPham @MaNV,@TenSP,@MaLoai, @DonGia,@SLTon, @MaNCCap", connection);
                             cmd.Parameters.AddWithValue("@TenSP", tbName.Text);
                             cmd.Parameters.AddWithValue("@DonGia", tbPrice.Text);
-                            cmd.Parameters.AddWithValue("@MaNV", tbID.Name);
+                            cmd.Parameters.AddWithValue("@MaNV", MaNV);
                             cmd.Parameters.AddWithValue("@MaLoai", cbbMaLoai.SelectedValue);
                             cmd.Parameters.AddWithValue("@MaNCCap", cbbNhaCungCap.SelectedValue);
                             cmd.Parameters.AddWithValue("@SLTon", tbSLTon.Text);
@@ -256,11 +264,6 @@ namespace DBMS_G15
                             autoLoadProductData();
                             MessageBox.Show("Thêm sản phẩm thành công");
                             loadAfterAdd();
-                        }
-                        else
-                        {
-                            reader2.Close();
-                            MessageBox.Show("Sản phẩm đã tồn tại.");
                         }
                     }
                     catch (Exception ex)

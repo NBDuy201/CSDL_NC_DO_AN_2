@@ -18,12 +18,15 @@ namespace DBMS_G15
         SqlCommand command;
         SqlDataAdapter adapter = new SqlDataAdapter();
         DataTable tableProduct = new DataTable();
+        string Role;
         string str = @"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True";
         public LoginForm()
         {
             InitializeComponent();
             this.AcceptButton = loginBtn;
         }
+
+      
 
         private void loginBtn_Click(object sender, EventArgs e)
         {
@@ -74,7 +77,7 @@ namespace DBMS_G15
                         }
                         // Check Nhân viên
                        readerCus.Close();
-                       SqlCommand checkStaffAccountExisted = new SqlCommand("select* from KhachHang where UserName = @UserName", connection);
+                       SqlCommand checkStaffAccountExisted = new SqlCommand("select* from NhanVien where UserName = @UserName", connection);
                        checkStaffAccountExisted.Parameters.AddWithValue("@UserName", usernameTxt.Text);
                        SqlDataReader readerStaff = checkStaffAccountExisted.ExecuteReader();
                        if (readerStaff.HasRows)
@@ -90,16 +93,19 @@ namespace DBMS_G15
                                 readerStaffPass.Close();
                                 SqlCommand checkStaffRole = new SqlCommand("select * from NhanVien where UserName = @UserName", connection);
                                 checkStaffRole.Parameters.AddWithValue("@UserName", usernameTxt.Text);
-                                string ChucVu = checkStaffRole.ExecuteScalar().ToString();
-                                if (ChucVu == "Quản lí")
+                                adapter.SelectCommand = checkStaffRole;
+                                DataTable dt = new DataTable();
+                                adapter.Fill(dt);
+                                Role = dt.Rows[0]["ChucVu"].ToString();
+                                if (Role == "Quản lí")
                                 {
                                     check = 2;
                                 }
-                                else if (ChucVu == "Quản trị")
+                                else if (Role == "Quản trị")
                                 {
                                     check = 1;
                                 }
-                                else if (ChucVu == "Tài xế")
+                                else if (Role == "Tài xế")
                                 {
                                     check = 3;
                                 }
