@@ -29,8 +29,8 @@ namespace DBMS_G15
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrderForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -39,13 +39,14 @@ namespace DBMS_G15
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.cbbProduct = new System.Windows.Forms.ComboBox();
-            this.btnDeleteProduct = new System.Windows.Forms.Button();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.MaKHTb = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cbbArea = new System.Windows.Forms.ComboBox();
+            this.cbbKM = new System.Windows.Forms.ComboBox();
             this.btnAddOrder = new System.Windows.Forms.Button();
             this.btnAddProduct = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -56,7 +57,6 @@ namespace DBMS_G15
             this.label2 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.DetailOrderDGV = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -100,7 +100,6 @@ namespace DBMS_G15
             this.panel2.Controls.Add(this.numericUpDown1);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.cbbProduct);
-            this.panel2.Controls.Add(this.btnDeleteProduct);
             this.panel2.Controls.Add(this.panel10);
             this.panel2.Controls.Add(this.btnAddProduct);
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -113,7 +112,7 @@ namespace DBMS_G15
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(776, 14);
+            this.label8.Location = new System.Drawing.Point(841, 14);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(264, 29);
@@ -123,7 +122,7 @@ namespace DBMS_G15
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(630, 123);
+            this.label5.Location = new System.Drawing.Point(695, 123);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 20);
@@ -132,7 +131,7 @@ namespace DBMS_G15
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(782, 123);
+            this.numericUpDown1.Location = new System.Drawing.Point(803, 117);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(182, 26);
@@ -142,7 +141,7 @@ namespace DBMS_G15
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(630, 69);
+            this.label6.Location = new System.Drawing.Point(695, 69);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(83, 20);
@@ -153,7 +152,7 @@ namespace DBMS_G15
             // 
             this.cbbProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbProduct.FormattingEnabled = true;
-            this.cbbProduct.Location = new System.Drawing.Point(782, 69);
+            this.cbbProduct.Location = new System.Drawing.Point(803, 60);
             this.cbbProduct.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbbProduct.Name = "cbbProduct";
             this.cbbProduct.Size = new System.Drawing.Size(180, 28);
@@ -161,36 +160,53 @@ namespace DBMS_G15
             this.cbbProduct.SelectionChangeCommitted += new System.EventHandler(this.cbbProduct_SelectionChangeCommitted);
             this.cbbProduct.Click += new System.EventHandler(this.cbbProduct_Click);
             // 
-            // btnDeleteProduct
-            // 
-            this.btnDeleteProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteProduct.Image = global::DBMS_G15.Properties.Resources.delete_32;
-            this.btnDeleteProduct.Location = new System.Drawing.Point(1078, 69);
-            this.btnDeleteProduct.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnDeleteProduct.Name = "btnDeleteProduct";
-            this.btnDeleteProduct.Size = new System.Drawing.Size(98, 85);
-            this.btnDeleteProduct.TabIndex = 3;
-            this.btnDeleteProduct.Text = "Xóa";
-            this.btnDeleteProduct.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnDeleteProduct.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnDeleteProduct.UseVisualStyleBackColor = true;
-            this.btnDeleteProduct.Click += new System.EventHandler(this.btnDeleteProduct_Click);
-            // 
             // panel10
             // 
+            this.panel10.Controls.Add(this.button2);
             this.panel10.Controls.Add(this.button1);
             this.panel10.Controls.Add(this.MaKHTb);
             this.panel10.Controls.Add(this.label7);
             this.panel10.Controls.Add(this.label4);
             this.panel10.Controls.Add(this.label3);
-            this.panel10.Controls.Add(this.cbbArea);
+            this.panel10.Controls.Add(this.cbbKM);
             this.panel10.Controls.Add(this.btnAddOrder);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel10.Location = new System.Drawing.Point(0, 0);
             this.panel10.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(606, 163);
+            this.panel10.Size = new System.Drawing.Size(687, 163);
             this.panel10.TabIndex = 3;
+            // 
+            // button2
+            // 
+            this.button2.Enabled = false;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.Location = new System.Drawing.Point(554, 57);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(95, 86);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Đồng ý";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(453, 58);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 85);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Xem";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MaKHTb
             // 
@@ -230,23 +246,23 @@ namespace DBMS_G15
             this.label3.TabIndex = 4;
             this.label3.Text = "Mã Khách Hàng";
             // 
-            // cbbArea
+            // cbbKM
             // 
-            this.cbbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbArea.FormattingEnabled = true;
-            this.cbbArea.Location = new System.Drawing.Point(152, 115);
-            this.cbbArea.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cbbArea.Name = "cbbArea";
-            this.cbbArea.Size = new System.Drawing.Size(180, 28);
-            this.cbbArea.TabIndex = 3;
-            this.cbbArea.SelectedIndexChanged += new System.EventHandler(this.cbbArea_SelectedIndexChanged);
-            this.cbbArea.SelectionChangeCommitted += new System.EventHandler(this.cbbArea_SelectionChangeCommitted);
+            this.cbbKM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbKM.FormattingEnabled = true;
+            this.cbbKM.Location = new System.Drawing.Point(152, 115);
+            this.cbbKM.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cbbKM.Name = "cbbKM";
+            this.cbbKM.Size = new System.Drawing.Size(180, 28);
+            this.cbbKM.TabIndex = 3;
+            this.cbbKM.SelectionChangeCommitted += new System.EventHandler(this.cbbArea_SelectionChangeCommitted);
+            this.cbbKM.Click += new System.EventHandler(this.cbbKM_Click);
             // 
             // btnAddOrder
             // 
             this.btnAddOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddOrder.Image = global::DBMS_G15.Properties.Resources.add_32;
-            this.btnAddOrder.Location = new System.Drawing.Point(372, 58);
+            this.btnAddOrder.Location = new System.Drawing.Point(347, 57);
             this.btnAddOrder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddOrder.Name = "btnAddOrder";
             this.btnAddOrder.Size = new System.Drawing.Size(98, 85);
@@ -261,7 +277,7 @@ namespace DBMS_G15
             // 
             this.btnAddProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddProduct.Image = global::DBMS_G15.Properties.Resources.add_32;
-            this.btnAddProduct.Location = new System.Drawing.Point(972, 69);
+            this.btnAddProduct.Location = new System.Drawing.Point(1022, 60);
             this.btnAddProduct.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddProduct.Name = "btnAddProduct";
             this.btnAddProduct.Size = new System.Drawing.Size(98, 85);
@@ -380,21 +396,6 @@ namespace DBMS_G15
             this.DetailOrderDGV.Size = new System.Drawing.Size(1212, 260);
             this.DetailOrderDGV.TabIndex = 0;
             // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(478, 58);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 85);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Xem";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // OrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -438,7 +439,6 @@ namespace DBMS_G15
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Button btnAddOrder;
-        private System.Windows.Forms.Button btnDeleteProduct;
         private System.Windows.Forms.Button btnAddProduct;
         private System.Windows.Forms.ComboBox cbbProduct;
         private System.Windows.Forms.Label label5;
@@ -451,7 +451,8 @@ namespace DBMS_G15
         private System.Windows.Forms.DataGridView DetailOrderDGV;
         private System.Windows.Forms.TextBox MaKHTb;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbbArea;
+        private System.Windows.Forms.ComboBox cbbKM;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

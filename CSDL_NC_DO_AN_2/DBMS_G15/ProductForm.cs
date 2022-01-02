@@ -17,14 +17,30 @@ namespace DBMS_G15
         SqlCommand command;
         SqlDataAdapter adapter = new SqlDataAdapter();
         DataTable tableProduct = new DataTable();
+        string UserName;
         string str = @"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True";
         string placeholder = "Nhập tên sản phâm...";
         private int offset;
         const int maxRowsPerPage = 15;
-        public productForm()
+        string MaNV;
+        public productForm(string _UserName)
         {
+            UserName = _UserName;
             InitializeComponent();
             offset = 0;
+        }
+
+        void getMaNV()
+        {
+            DataTable tb = new DataTable();
+            command = connection.CreateCommand();
+            command.CommandText = "select * from NhanVien where UserName = @UserName";
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@UserName", UserName);
+            adapter.SelectCommand = command;
+            tb.Clear();
+            adapter.Fill(tb);
+            MaNV = tb.Rows[0]["MaNV"].ToString();
         }
 
         private void productForm_Load(object sender, EventArgs e)
@@ -34,6 +50,7 @@ namespace DBMS_G15
             autoLoadProductData();
             btnPrevious.Enabled = false;
             searchBox.Text = placeholder;
+            getMaNV();
         }
         private void autoLoadProductData()
         {
@@ -82,13 +99,15 @@ namespace DBMS_G15
 
         private void productDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            LoadMaLoai();
+            LoadNhaCungCap();
             int rowIndex = productDGV.CurrentCell.RowIndex;
             tbID.Text = productDGV.Rows[rowIndex].Cells[0].Value.ToString();
             tbName.Text = productDGV.Rows[rowIndex].Cells[1].Value.ToString();
-            cbbMaLoai.SelectedItem = productDGV.Rows[rowIndex].Cells[2].Value.ToString();
+            cbbMaLoai.SelectedValue = productDGV.Rows[rowIndex].Cells[2].Value.ToString();
             tbPrice.Text = productDGV.Rows[rowIndex].Cells[3].Value.ToString();
             tbSLTon.Text = productDGV.Rows[rowIndex].Cells[4].Value.ToString();
-            cbbNhaCungCap.SelectedItem = productDGV.Rows[rowIndex].Cells[5].Value.ToString();
+            cbbNhaCungCap.SelectedValue = productDGV.Rows[rowIndex].Cells[5].Value.ToString();
         }
 
         private void searchBox_Enter(object sender, EventArgs e)
@@ -173,8 +192,8 @@ namespace DBMS_G15
                 try
                 {
                     connection.Open();
-                    SqlCommand checkProductExisted = new SqlCommand("exec lookupSP @MaSP", connection);
-                    checkProductExisted.Parameters.AddWithValue("@MaSP", tbID.Text);
+                    SqlCommand checkProductExisted = new SqlCommand("select * from SanPham where TenSP= @TenSP", connection);
+                    checkProductExisted.Parameters.AddWithValue("@TenSP", tbName.Text);
                     SqlDataReader reader = checkProductExisted.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -182,10 +201,12 @@ namespace DBMS_G15
                         DialogResult confirm = MessageBox.Show("Xác nhận cập nhật sản phẩm này?", "Cập Nhật Sản Phẩm", MessageBoxButtons.YesNo);
                         if (confirm == DialogResult.Yes)
                         {
-                            SqlCommand updateCommand = new SqlCommand("exec updateSP @MaSP, @TenSP, @Gia, @MoTa", connection);
+                            SqlCommand updateCommand = new SqlCommand("exec NhanVienQuanTri_UpdateSanPham @MaNV, @MaSP, @TenSP, @Gia, @SL", connection);
                             updateCommand.Parameters.AddWithValue("@MaSP", tbID.Text);
+                            updateCommand.Parameters.AddWithValue("@MaNV", MaNV);
                             updateCommand.Parameters.AddWithValue("@TenSP", tbName.Text);
                             updateCommand.Parameters.AddWithValue("@Gia", tbPrice.Text);
+                            updateCommand.Parameters.AddWithValue("@SL", tbSLTon.Text);
                             updateCommand.ExecuteNonQuery();
                             autoLoadProductData();
                             MessageBox.Show("Cập nhật sản phẩm thành công");
@@ -228,8 +249,8 @@ namespace DBMS_G15
                             cmd.Parameters.AddWithValue("@TenSP", tbName.Text);
                             cmd.Parameters.AddWithValue("@DonGia", tbPrice.Text);
                             cmd.Parameters.AddWithValue("@MaNV", tbID.Name);
-                            cmd.Parameters.AddWithValue("@MaLoai", cbbMaLoai.SelectedItem.ToString());
-                            cmd.Parameters.AddWithValue("@MaNCCap", cbbNhaCungCap.SelectedItem.ToString());
+                            cmd.Parameters.AddWithValue("@MaLoai", cbbMaLoai.SelectedValue);
+                            cmd.Parameters.AddWithValue("@MaNCCap", cbbNhaCungCap.SelectedValue);
                             cmd.Parameters.AddWithValue("@SLTon", tbSLTon.Text);
                             cmd.ExecuteNonQuery();
                             autoLoadProductData();
@@ -265,8 +286,9 @@ namespace DBMS_G15
             tbID.Text = "";
             tbName.Text = "";
             tbPrice.Text = "";
-            cbbNhaCungCap.Text = "";
-            cbbMaLoai.Text = "";
+            cbbNhaCungCap.SelectedValue = "";
+            cbbMaLoai.SelectedValue = "";
+            tbSLTon.Text = "";
             offset = 0;
             autoLoadProductData();
         }

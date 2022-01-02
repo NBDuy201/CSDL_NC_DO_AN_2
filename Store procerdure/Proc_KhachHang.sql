@@ -35,19 +35,16 @@ GO
 -- xem tất cả đơn hàng
 CREATE or ALTER 
 PROC KhachHang_XemTatCa_DonHang
-	@MaKH int,
-	@offset int,
-	@rows int
+	@MaKH int
 AS
 BEGIN TRAN
 	select * FROM DonHang
 	where @MaKH = MaKH
 	order by MaDH
-	offset @offset rows fetch next @rows rows only
 COMMIT
 GO
 
---EXEC KhachHang_XemTatCa_DonHang 1, 2, 2
+--EXEC KhachHang_XemTatCa_DonHang 1502
 GO
 
 -- xem CHI TIẾT đơn hàng
@@ -67,15 +64,17 @@ GO
 -- tạo giỏ hàng mới
 CREATE or ALTER 
 PROC KhachHang_Them_GioHang
-	@MaKH INT
+	@MaKH INT,
+	@MaKM INT
 AS
 BEGIN TRAN
 	insert into DonHang (NgayLapDon, MaKH, TinhTrang, MaKM, MaNV, Freeship)
-	values (NULL, @MaKH, N'Chưa đồng ý', NULL, NULL, NULL)
+	values (NULL, @MaKH, N'Chưa đồng ý', @MaKM, NULL, NULL)
 COMMIT
 GO
 
---EXEC KhachHang_Them_GioHang 3
+
+--EXEC KhachHang_Them_GioHang 3,5
 GO
 
 -- Thêm vào giỏ hàng
@@ -109,18 +108,9 @@ CREATE or ALTER
 PROC KhachHang_XacNhan_DonHang
 	@MaDH int,
 	@NgayLapDon date,
-    @MaKM int,
-	@MaSP int
 AS
 BEGIN TRAN
-	IF (@MaSP IS NULL OR NOT EXISTS (SELECT * FROM SanPham))
-	BEGIN
-		RAISERROR(N'Không tồn sản phẩm', -1, -1)
-		ROLLBACK TRAN
-		RETURN
-	END
-
-	update DonHang set NgayLapDon = @NgayLapDon, TinhTrang = N'Đồng ý', MaKM = @MaKM  where MaDH = @MaDH
+	update DonHang set NgayLapDon = @NgayLapDon, TinhTrang = N'Đồng ý' where MaDH = @MaDH
 
 	UPDATE SanPham
 	SET SoLuongTon = SoLuongTon - CT_DH.SoLuong
@@ -140,4 +130,4 @@ BEGIN TRAN
 COMMIT
 GO
 
---EXEC KhachHang_XacNhan_DonHang 5, '2021-7-10', 1, 2
+--EXEC KhachHang_XacNhan_DonHang 5, '2021-7-10', 1

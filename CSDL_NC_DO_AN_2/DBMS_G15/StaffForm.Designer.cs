@@ -160,9 +160,9 @@ namespace DBMS_G15
             this.customerPhoneLabel.Location = new System.Drawing.Point(891, 62);
             this.customerPhoneLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.customerPhoneLabel.Name = "customerPhoneLabel";
-            this.customerPhoneLabel.Size = new System.Drawing.Size(109, 20);
+            this.customerPhoneLabel.Size = new System.Drawing.Size(70, 20);
             this.customerPhoneLabel.TabIndex = 9;
-            this.customerPhoneLabel.Text = "Số Điện Thoại";
+            this.customerPhoneLabel.Text = "Chức Vụ";
             // 
             // customerAddressLabel
             // 

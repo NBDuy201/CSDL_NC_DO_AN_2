@@ -17,11 +17,9 @@ namespace DBMS_G15
         SqlCommand command;
         SqlDataAdapter adapter = new SqlDataAdapter();
         string UserName;
-        string PhivanChuyen = "25000";
         string ChuaDongY = "Chưa đồng ý";
         string str = @"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True";
-        DateTime now = DateTime.Now;
-
+        DateTime date = DateTime.Now.Date;
         public OrderForm(string _UserName)
         {
             InitializeComponent();
@@ -78,9 +76,29 @@ namespace DBMS_G15
             }
         }
 
-        void LoadOrder()
+        public void LoadcbbKM()
         {
-            using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=DBMS_ThucHanh_Nhom15;Integrated Security=True"))
+            try
+            {
+                command = connection.CreateCommand();
+                command.CommandText = "select * from KhuyenMai";
+                command.CommandType = CommandType.Text;
+                adapter.SelectCommand = command;
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                cbbKM.DisplayMember = "MaKM";
+                cbbKM.ValueMember = "MaKM";
+                cbbKM.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi kết nối với cơ sở dữ liệu!");
+            }
+        }
+
+        public void LoadOrder()
+        {
+            using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True"))
             {
                 try
                 {
@@ -115,12 +133,12 @@ namespace DBMS_G15
                 DialogResult confirm = MessageBox.Show("Xác nhận thêm sản phẩm này?", "Thêm sản phẩm", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
                 {
-                    using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=DBMS_ThucHanh_Nhom15;Integrated Security=True"))
+                    using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True"))
                     {
                         try
                         {
                             connection.Open();
-                            SqlCommand updateCommand = new SqlCommand("Insert into CHITIETDONHANG(MaDH,MaSP,SoLuong) values (@MaDH,@MaSP,@SL)", connection);
+                            SqlCommand updateCommand = new SqlCommand("Exec KhachHang_ThemSanPham_GioHang @MaSP,@MaDH,@SL", connection);
                             updateCommand.Parameters.AddWithValue("@MaDH", OrderDGV.CurrentRow.Cells[0].Value);
                             updateCommand.Parameters.AddWithValue("@MaSP", cbbProduct.SelectedValue);
                             updateCommand.Parameters.AddWithValue("@SL", numericUpDown1.Value);
@@ -158,7 +176,7 @@ namespace DBMS_G15
 
         private void btnAddOrder_Click(object sender, EventArgs e)
         {
-            if ( cbbArea.SelectedValue == null)
+            if ( cbbKM.SelectedValue == null)
             {
                 MessageBox.Show("Vui lòng chọn đủ thông tin.");
             }
@@ -172,8 +190,9 @@ namespace DBMS_G15
                         try
                         {
                             connection.Open();
-                            SqlCommand updateCommand = new SqlCommand("EXEC KhachHang_Them_GioHang @MaKH)", connection);
+                            SqlCommand updateCommand = new SqlCommand("EXEC KhachHang_Them_GioHang @MaKH,@MaKM", connection);
                             updateCommand.Parameters.AddWithValue("@MaKH", MaKHTb.Text);
+                            updateCommand.Parameters.AddWithValue("@MaKM", cbbKM.SelectedValue);
                             updateCommand.ExecuteNonQuery();
                             LoadOrder();
                             OrderDGV.CurrentCell = OrderDGV[0, OrderDGV.Rows.Count - 1];
@@ -197,21 +216,13 @@ namespace DBMS_G15
                     connection.Open();
                     DataTable tbDetailOrder = new DataTable();
                     command = connection.CreateCommand();
-                    command.CommandText = "select CT.MaDH,SP.MaSP,SP.TenSP,CT.SoLuong,CT.ThanhTien from CT_ CT,SANPHAM SP where CT.MaDH=@MaDH and CT.MaSP=SP.MaSP";
+                    command.CommandText = "select CT.MaDH,SP.MaSP,SP.TenSP,CT.SoLuong,CT.ThanhTien from CT_DONHANG CT,SANPHAM SP where CT.MaDH=@MaDH and CT.MaSP=SP.MaSP";
                     command.CommandType = CommandType.Text;
                     command.Parameters.AddWithValue("@MaDH", OrderDGV.CurrentRow.Cells[0].Value);
                     adapter.SelectCommand = command;
                     tbDetailOrder.Clear();
                     adapter.Fill(tbDetailOrder);
                     DetailOrderDGV.DataSource = tbDetailOrder;
-                    if(DetailOrderDGV.Rows.Count == 0)
-                    {
-                        btnDeleteProduct.Enabled = false;
-                    }
-                    else
-                    {
-                        btnDeleteProduct.Enabled = true;
-                    }
                     connection.Close();
                 }
                 catch (Exception ex)
@@ -226,38 +237,8 @@ namespace DBMS_G15
             cbbProduct.SelectedItem = null;
             numericUpDown1.Value = 0;
             LoadDetailOrder();
-            checkTinhTrang();
+            checkTinhTrang(); 
         }
-
-        private void btnDeleteProduct_Click(object sender, EventArgs e)
-        {
-            using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True"))
-            {
-                DialogResult confirm = MessageBox.Show("Xác nhận xóa sản phẩm khỏi đơn hàng?", "Xóa Khỏi Đơn Hàng", MessageBoxButtons.YesNo);
-                if (confirm == DialogResult.Yes)
-                {
-                    try
-                    {
-                        connection.Open();
-                        SqlCommand DeleteCommand = new SqlCommand("delete from CHITIETDONHANG WHERE MaDH=@MaDH and MaSP=@MaSP", connection);
-                        DeleteCommand.Parameters.AddWithValue("@MaDH", DetailOrderDGV.CurrentRow.Cells[0].Value);
-                        DeleteCommand.Parameters.AddWithValue("@MaSP", DetailOrderDGV.CurrentRow.Cells[1].Value);
-                        DeleteCommand.ExecuteNonQuery();
-                        LoadDetailOrder();
-                        LoadOrder();
-                        MessageBox.Show("Xóa sản phẩm khỏi đơn hàng thành công");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-            }
-
-        }
-
-       
-
         void checkTinhTrang()
         {
             if (OrderDGV.CurrentRow.Cells[3].Value.ToString() != ChuaDongY)
@@ -265,32 +246,59 @@ namespace DBMS_G15
                 cbbProduct.Enabled = false;
                 numericUpDown1.Enabled = false;
                 btnAddProduct.Enabled = false;
-                btnDeleteProduct.Enabled = false;
+                button2.Enabled = false;
             }
             else if (OrderDGV.CurrentRow.Cells[3].Value.ToString() == ChuaDongY)
             {
                 cbbProduct.Enabled = true;
                 numericUpDown1.Enabled = true;
                 btnAddProduct.Enabled = true;
-                btnDeleteProduct.Enabled = true;
+                button2.Enabled = true;
             }
         }
         private void OrderForm_Load(object sender, EventArgs e)
         {
             cbbProduct.Enabled = false;
             numericUpDown1.Enabled = false;
-            btnDeleteProduct.Enabled = false;
             btnAddProduct.Enabled = false;
         }
 
-        private void cbbArea_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void button1_Click(object sender, EventArgs e)
         {
             LoadOrder();
+        }
+
+        private void cbbKM_Click(object sender, EventArgs e)
+        {
+            LoadcbbKM();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult confirm = MessageBox.Show("Xác nhận thanh toán đơn hàng này?", "Thanh toán đơn hàng", MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True"))
+                {
+                    try
+                    {
+                        connection.Open();
+                        SqlCommand updateCommand = new SqlCommand("EXEC KhachHang_XacNhan_DonHang @MaDH,@NgayLapDon", connection);
+                        updateCommand.Parameters.AddWithValue("@MaDH", OrderDGV.CurrentRow.Cells[0].Value);
+                        updateCommand.Parameters.AddWithValue("@NgayLapDon",date );                        
+                        updateCommand.ExecuteNonQuery();
+                        LoadOrder();
+                        OrderDGV.CurrentCell = OrderDGV[0, OrderDGV.Rows.Count - 1];
+                        MessageBox.Show("Xác nhận thành công");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
     }
 }
