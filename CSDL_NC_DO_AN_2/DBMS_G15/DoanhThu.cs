@@ -22,10 +22,13 @@ namespace DBMS_G15
         string str = @"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True";
         private int offset;
         const int maxRowsPerPage = 15;
-        public DoanhThu()
+        string MaNV;
+        public DoanhThu(string _UserName)
         {
+            UserName = _UserName;
             InitializeComponent();
             offset = 0;
+            
         }
 
         private void autoLoadOrderData()
@@ -85,6 +88,59 @@ namespace DBMS_G15
             connection.Open();
             autoLoadOrderData();
             btnPrevious.Enabled = false;
+            getMaNV();
+        }
+
+        void getMaNV()
+        {
+            DataTable tb = new DataTable();
+            command = connection.CreateCommand();
+            command.CommandText = "select * from NhanVien where UserName = @UserName";
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@UserName", UserName);
+            adapter.SelectCommand = command;
+            tb.Clear();
+            adapter.Fill(tb);
+            MaNV = tb.Rows[0]["MaNV"].ToString();
+        }
+
+        private void ThongKe_Click(object sender, EventArgs e)
+        {
+            if (YearTb.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+            }
+            else
+            {
+                using (SqlConnection connection = new SqlConnection(@"Data Source=(local);Initial Catalog=QLCuaHang;Integrated Security=True"))
+                {
+                    try
+                    {
+                        connection.Open();
+                        DataTable tbDoanhThu = new DataTable();
+                        command = connection.CreateCommand();
+                        command.CommandText = "Exec NhanVienQuanLy_ThongKeDoanhThuThang @MaNV,@Month,@Year";
+                        command.CommandType = CommandType.Text;
+                        command.Parameters.AddWithValue("@MaNV", MaNV);
+                        command.Parameters.AddWithValue("@Month", MonthTb.Text);
+                        command.Parameters.AddWithValue("@Year", YearTb.Text);
+                        adapter.SelectCommand = command;
+                        tbDoanhThu.Clear();
+                        adapter.Fill(tbDoanhThu);
+                        DoanhThuDGV.DataSource = tbDoanhThu;
+                        connection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void DoanhThuTb_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

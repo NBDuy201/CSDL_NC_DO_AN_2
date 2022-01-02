@@ -175,7 +175,7 @@ namespace DBMS_G15
             navMenu.Height = btnMoney.Height;
             navMenu.Top = btnMoney.Top;
             navMenu.BringToFront();
-            OpenChildForm(new DoanhThu());
+            OpenChildForm(new DoanhThu(UserName));
         }
 
         private void btnProfile_Click(object sender, EventArgs e)

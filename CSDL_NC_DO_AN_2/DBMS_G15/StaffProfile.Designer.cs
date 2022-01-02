@@ -58,7 +58,8 @@ namespace DBMS_G15
             // 
             // UserNameTb
             // 
-            this.UserNameTb.Location = new System.Drawing.Point(554, 341);
+            this.UserNameTb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.UserNameTb.Location = new System.Drawing.Point(597, 394);
             this.UserNameTb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.UserNameTb.Name = "UserNameTb";
             this.UserNameTb.ReadOnly = true;
@@ -67,9 +68,10 @@ namespace DBMS_G15
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(344, 330);
+            this.label2.Location = new System.Drawing.Point(387, 383);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(155, 36);
@@ -79,7 +81,8 @@ namespace DBMS_G15
             // 
             // RoleTb
             // 
-            this.RoleTb.Location = new System.Drawing.Point(554, 275);
+            this.RoleTb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.RoleTb.Location = new System.Drawing.Point(597, 328);
             this.RoleTb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RoleTb.Name = "RoleTb";
             this.RoleTb.ReadOnly = true;
@@ -88,9 +91,10 @@ namespace DBMS_G15
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(340, 267);
+            this.label3.Location = new System.Drawing.Point(383, 320);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(131, 36);
@@ -99,7 +103,8 @@ namespace DBMS_G15
             // 
             // nameTb
             // 
-            this.nameTb.Location = new System.Drawing.Point(554, 216);
+            this.nameTb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.nameTb.Location = new System.Drawing.Point(597, 269);
             this.nameTb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nameTb.Name = "nameTb";
             this.nameTb.ReadOnly = true;
@@ -108,9 +113,10 @@ namespace DBMS_G15
             // 
             // nameLabel
             // 
+            this.nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.Location = new System.Drawing.Point(344, 206);
+            this.nameLabel.Location = new System.Drawing.Point(387, 259);
             this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(157, 36);
