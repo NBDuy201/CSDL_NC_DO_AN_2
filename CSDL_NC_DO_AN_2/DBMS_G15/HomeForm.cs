@@ -91,7 +91,7 @@ namespace DBMS_G15
             navMenu.Height = btnProduct.Height;
             navMenu.Top = btnProduct.Top;
             navMenu.BringToFront();
-            OpenChildForm(new productForm());
+            OpenChildForm(new productForm(UserName));
         }
 
         private void btnOrder_Click(object sender, EventArgs e)
