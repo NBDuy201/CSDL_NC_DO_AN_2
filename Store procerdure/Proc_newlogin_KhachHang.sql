@@ -11,10 +11,10 @@ AS
 BEGIN
 	BEGIN TRAN
 
-		-- INSERT thông tin Đối tác
+		-- INSERT thông tin Khách hàng
 		BEGIN TRY
-			INSERT KhacHang (TenKH, DiaChi, Sdt)
-			VALUES (@TenKH, @DiaChi, @Sdt)
+			INSERT KhachHang (TenKH, DiaChi, Sdt,UserName,Pass)
+			VALUES (@TenKH, @DiaChi, @Sdt,@USERNAME,@PASS)
 		END TRY
 		BEGIN CATCH
 			ROLLBACK TRAN
@@ -38,5 +38,8 @@ BEGIN
 	COMMIT TRAN
 END
 GO
-
---exec newlogin_KhachHang 'Tuan', '0921', '012 KHOA HONG', 'tuan123', 'tuan123'
+--Các Tài khoản
+--exec newlogin_KhachHang 'Nhut', '0764740821', 'Test', 'Customer122345', '123'
+--insert into NhaCungCap(MaNCCap,Ten,DiaChi,Sdt,UserName,Pass) values ('NCC9999','ConCung','Test','0838383838','NhaCungCap','123')
+--insert into NhanVien(MaNV,TenNV,ChucVu,UserName,Pass) values ('NV9999',N'Phạm Anh Tuấn',N'Quản lí','QuanLi','123')
+select ChucVu from NhanVien where MaNV='NV9999'

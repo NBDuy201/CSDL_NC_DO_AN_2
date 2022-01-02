@@ -114,6 +114,8 @@ BEGIN
 	COMMIT TRAN
 END
 
+go
+
 -- =============================================
 --- Thêm khuyến mãi
 --- Input: Mã nhân viên, ngày BD, ngày KT, Mức KM (1, 100)
