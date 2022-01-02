@@ -16,7 +16,6 @@ GO
 CREATE ROLE NVQuanLy AUTHORIZATION [dbo]
 GO
 GRANT SELECT ON DonHang TO NVQuanLy
-GRANT EXEC ON NhanVienQuanLy_UpdateTinhTrangDonHang TO NVQuanLy
 GRANT EXEC ON NhanVienQuanLy_ThongKeDoanhThuThang TO NVQuanLy
 GRANT EXEC ON NhanVienQuanLy_ThemKhuyenMai TO NVQuanLy
 GRANT DELETE ON KhuyenMai TO NVQuanLy
