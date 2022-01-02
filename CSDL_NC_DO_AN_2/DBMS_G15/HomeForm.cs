@@ -37,9 +37,8 @@ namespace DBMS_G15
             }
             else if(check == 1)
             {
-                btnProfile.Hide();
+                btnOrder.Hide();
                 btnPartner.Hide();
-                btnProduct.Hide();
                 btnMoney.Hide();
                 btnDriver.Hide();
                 btnCustomer.Hide();
@@ -54,20 +53,22 @@ namespace DBMS_G15
             }
             else if(check == 3)
             {
-                btnCustomer.Hide();
-                btnDriver.Hide();
-                btnPartner.Hide();
-                btnStaff.Hide();
+                btnOrder.Hide();
                 btnProduct.Hide();
+                btnMoney.Hide();
+                btnStaff.Hide();
+                btnCustomer.Hide();
+                btnOrder.Hide();
+                btnPartner.Hide();
             }
             else if(check==4)
             {
                 btnOrder.Hide();
                 btnProduct.Hide();
                 btnMoney.Hide();
-                btnDriver.Hide();
                 btnStaff.Hide();
                 btnCustomer.Hide();
+                btnDriver.Hide();
             }    
         }
         private void OpenChildForm(Form childForm)
@@ -122,7 +123,7 @@ namespace DBMS_G15
             navMenu.Height = btnDriver.Height;
             navMenu.Top = btnDriver.Top;
             navMenu.BringToFront();
-            OpenChildForm(new DriverForm());
+            //OpenChildForm(new DriverForm());
         }
 
         private void btnPartner_Click(object sender, EventArgs e)

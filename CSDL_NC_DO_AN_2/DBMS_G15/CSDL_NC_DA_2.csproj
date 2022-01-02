@@ -58,12 +58,6 @@
     <Compile Include="CustomerSignUpForm.Designer.cs">
       <DependentUpon>CustomerSignUpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DriverForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DriverForm.Designer.cs">
-      <DependentUpon>DriverForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="DoanhThu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,9 +116,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DoanhThu.resx">
       <DependentUpon>DoanhThu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DriverForm.resx">
-      <DependentUpon>DriverForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>

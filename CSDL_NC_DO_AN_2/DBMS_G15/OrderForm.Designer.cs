@@ -212,6 +212,7 @@ namespace DBMS_G15
             // 
             this.MaKHTb.Location = new System.Drawing.Point(152, 62);
             this.MaKHTb.Name = "MaKHTb";
+            this.MaKHTb.ReadOnly = true;
             this.MaKHTb.Size = new System.Drawing.Size(180, 26);
             this.MaKHTb.TabIndex = 7;
             // 

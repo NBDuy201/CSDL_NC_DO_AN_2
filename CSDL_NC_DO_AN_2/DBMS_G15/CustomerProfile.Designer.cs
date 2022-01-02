@@ -81,6 +81,7 @@ namespace DBMS_G15
             // 
             // addressTb
             // 
+            this.addressTb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.addressTb.Location = new System.Drawing.Point(554, 341);
             this.addressTb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.addressTb.Name = "addressTb";
@@ -90,6 +91,7 @@ namespace DBMS_G15
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(344, 330);
@@ -101,6 +103,7 @@ namespace DBMS_G15
             // 
             // phoneNumTb
             // 
+            this.phoneNumTb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.phoneNumTb.Location = new System.Drawing.Point(554, 275);
             this.phoneNumTb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.phoneNumTb.Name = "phoneNumTb";
@@ -110,6 +113,7 @@ namespace DBMS_G15
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(340, 267);
@@ -121,6 +125,7 @@ namespace DBMS_G15
             // 
             // nameTb
             // 
+            this.nameTb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.nameTb.Location = new System.Drawing.Point(554, 216);
             this.nameTb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nameTb.Name = "nameTb";
@@ -130,6 +135,7 @@ namespace DBMS_G15
             // 
             // nameLabel
             // 
+            this.nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.Location = new System.Drawing.Point(344, 206);
@@ -147,7 +153,7 @@ namespace DBMS_G15
             this.panel3.Size = new System.Drawing.Size(1212, 162);
             this.panel3.TabIndex = 26;
             // 
-            // PartnerAndCustomerProfile
+            // CustomerProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -156,7 +162,7 @@ namespace DBMS_G15
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "PartnerAndCustomerProfile";
+            this.Name = "CustomerProfile";
             this.Text = "StaffProfile";
             this.Load += new System.EventHandler(this.StaffAndCustomerProfile_Load);
             this.panel2.ResumeLayout(false);

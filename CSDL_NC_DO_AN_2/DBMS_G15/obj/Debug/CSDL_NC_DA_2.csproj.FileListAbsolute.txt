@@ -4,7 +4,6 @@ C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâ
 C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâng cao)\Thực hành\Đồ Án 2\git\CSDL_NC_DO_AN_2\CSDL_NC_DO_AN_2\DBMS_G15\obj\Debug\CSDL_NC_DA_2.csproj.AssemblyReference.cache
 C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâng cao)\Thực hành\Đồ Án 2\git\CSDL_NC_DO_AN_2\CSDL_NC_DO_AN_2\DBMS_G15\obj\Debug\DBMS_G15.CustomerForm.resources
 C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâng cao)\Thực hành\Đồ Án 2\git\CSDL_NC_DO_AN_2\CSDL_NC_DO_AN_2\DBMS_G15\obj\Debug\DBMS_G15.CustomerSignUpForm.resources
-C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâng cao)\Thực hành\Đồ Án 2\git\CSDL_NC_DO_AN_2\CSDL_NC_DO_AN_2\DBMS_G15\obj\Debug\DBMS_G15.DriverForm.resources
 C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâng cao)\Thực hành\Đồ Án 2\git\CSDL_NC_DO_AN_2\CSDL_NC_DO_AN_2\DBMS_G15\obj\Debug\DBMS_G15.HomeForm.resources
 C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâng cao)\Thực hành\Đồ Án 2\git\CSDL_NC_DO_AN_2\CSDL_NC_DO_AN_2\DBMS_G15\obj\Debug\DBMS_G15.LoginForm.resources
 C:\Users\Admin\OneDrive\Desktop\Năm 21-22\HK1-2122\Cơ sở dữ liệu (Nâng cao)\Thực hành\Đồ Án 2\git\CSDL_NC_DO_AN_2\CSDL_NC_DO_AN_2\DBMS_G15\obj\Debug\DBMS_G15.OrderForm.resources
